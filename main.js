@@ -28,7 +28,7 @@ const rl = readline.createInterface({
 
 // simple function to parse the input into a useable array to do the conversions
 const parseInput = (inputString) => {
-  const stringArray = inputString.split(" ");
+  const stringArray = inputString.toUpperCase().split(" ");
   return stringArray;
 };
 
@@ -38,11 +38,7 @@ const validateInput = (inputArray) => {
     return false;
     // validate that the current conversions are available in our list based on ooriginal prompt
     // ignoring case
-  } else if (
-    !validConversions[inputArray[1].toUpperCase()].includes(
-      inputArray[2].toUpperCase()
-    )
-  ) {
+  } else if (!validConversions[inputArray[1]].includes(inputArray[2])) {
     return false;
   }
 
@@ -53,57 +49,67 @@ const validateInput = (inputArray) => {
 // this is a portion I feel can definitely be cleaned up given more thought and time
 // simple switch case to determine the appropiate conversion based on the input
 const handleConversion = (originalUnits, currentUOM, convertedUOM) => {
+  let finalConversion;
   switch (currentUOM) {
     case "L":
       // convert L to G
       if (convertedUOM === "G") {
-        return originalUnits * 0.264172;
+        finalConversion = originalUnits * 0.264172;
       }
+      break;
     case "CM":
       // convert CM to IN
       if (convertedUOM === "IN") {
-        return originalUnits * 0.3937;
+        finalConversion = originalUnits * 0.3937;
       }
-
+      break;
     case "LB":
       // conversion from LB to G
       if (convertedUOM === "G") {
-        return originalUnits * 8.35;
+        finalConversion = originalUnits * 8.35;
       }
+      break;
     case "IN":
       // handleConversion of IN to FT
       if (convertedUOM === "FT") {
-        return originalUnits * 0.083333;
+        finalConversion = originalUnits * 0.083333;
       } else if (convertedUOM === "CM") {
-        return originalUnits * 2.54;
+        finalConversion = originalUnits * 2.54;
       }
+      break;
     case "FT":
       // handle conversion of FT to IN
       if (convertedUOM === "IN") {
-        return originalUnits * 12;
+        finalConversion = originalUnits * 12;
       } // converting FT to CM
       else if (convertedUOM === "CM") {
-        return originalUnits * 30.48;
+        finalConversion = originalUnits * 30.48;
       }
+      break;
     case "G":
       // do G to L conversion
       if (convertedUOM === "L") {
-        return originalUnits / 0.264172;
+        finalConversion = originalUnits / 0.264172;
       } // converting G to LB
       else if (convertedUOM === "LB") {
-        return originalUnits * 8.0;
+        finalConversion = originalUnits * 8.0;
       }
+      break;
     case "YD":
       // converted YD to FT
       if (convertedUOM === "FT") {
-        return originalUnits * 3.0;
+        finalConversion = originalUnits * 3.0;
       }
+      break;
     case "KG":
       // converting LB to KG
       if (convertedUOM === "LB") {
-        return originalUnits * 2.20462;
+        finalConversion = originalUnits * 2.2;
       }
+      break;
   }
+
+  return finalConversion;
 };
 
 // this will format it to the nearest hundreths
@@ -150,7 +156,7 @@ const promptUser = () => {
 };
 
 //main function
-const main = async () => {
+const main = () => {
   promptUser();
 };
 
