@@ -38,6 +38,8 @@ const validateInput = (inputArray) => {
     return false;
     // validate that the current conversions are available in our list based on ooriginal prompt
     // ignoring case
+  } else if (!(inputArray[1] in validConversions)) {
+    return false;
   } else if (!validConversions[inputArray[1]].includes(inputArray[2])) {
     return false;
   }
